@@ -1,0 +1,19 @@
+{
+  "manifest_version": 2,
+  "name": "Todo list",
+  "description": "Simple todo list to add and remove items easily",
+  "version": "0.1",
+  "permissions": [
+  	"storage"
+  ],
+  "app": {
+    "background": {
+      "scripts": ["main.js"]
+    }
+  },
+  "icons": {
+    "16": "todo-list-16.jpg",
+    "128": "todo-list-128.jpg"
+  },
+  "minimum_chrome_version": "23"
+}

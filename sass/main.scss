@@ -1,0 +1,49 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	width: 980px;
+	margin: 0;
+	
+	.container {
+		padding: 10px;
+		width: 800px;
+
+		.input {
+
+			.heading {
+				margin-bottom: 5px;
+				font: bold 40px/42px arial;
+			}
+
+			.description {
+				margin-bottom: 5px;
+				font: normal 14px/16px arial;
+			}
+
+		} // input
+
+		.output {
+			margin-top: 20px;
+			.heading {
+				font: normal 22px/24px arial;
+			}
+
+			.items-ul {
+				.item {
+					list-style-position: inside;
+					font: normal 14px/16px arial;
+
+					.remove-button {
+						font: bold 14px/16px arial;
+						margin-left: 5px;
+						cursor: pointer;
+						color: red;
+					}
+				}
+			}
+		} // output
+	}
+}
