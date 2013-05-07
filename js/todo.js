@@ -1,32 +1,22 @@
 window.onload = function(){
-
-	var doc 			= document,
-		addButton		= doc.getElementById('add-button'),
-		removeButton	= doc.getElementsByClassName('remove-button'),
-		todoList 		= doc.getElementById('todo-list'),
-		userInput 		= doc.getElementById('user-input'),
-		storageObj 	 	= {},
-		storageBytes 	= 0,
-		id 				= 0;
-
+	// FUNCTUS
 	function loadData(){
 		/* 
-		** Extrai objetos do chrome.storage.local, cria elementos <li> e inclui no #document
+		** Extrai objetos do chrome.storage , cria elementos <li> e inclui no #document
 		*/
-
-		chrome.storage.local.get(
+		chrome.storage.sync.get(
 			function(item){
 				var objArray = [],
 					obj;
 				
 				objArray.push(item);
-				id = objArray.length;
+				id = objArray.length; // sincroniza o id global com o do storage
 				obj = objArray[0]; // extrai o objeto do array
 
 				// caso não existam objetos no array, pula o load e reseta o valor do id
-				if ( id < 1 ) {
+				if ( objArray.length < 1 ) {
 					id = 0;
-					return 'não existem elementos no objArray';
+					return 'não existem elementos no objArray, resetando o id';
 				}
 
 				// armazena os dados do storage.local
@@ -45,15 +35,16 @@ window.onload = function(){
 					span.innerText = 'x';						
 					li.appendChild(span);
 					todoList.appendChild(li);
-				} // laço for
+				}
+				// vasculha todos os <li> e adiciona a functus de remover item
 				setRemovers();
-			} // function
-		); // local.get()
+			} // storage callback()
+		);
 	} // loadData()
 
-	function setItem(){
+	function addItem(){
 		/*
-		**	Cria e insere no #document um elemento <li>
+		**	Cria e insere na <ul> todo-list um elemento <li>
 		*/
 
 		if ( userInput.value === '' ) {
@@ -85,56 +76,71 @@ window.onload = function(){
 
 		storageObj[id] = item;
 
-		// armazena os dados no chrome.storage.local
-		chrome.storage.local.set(storageObj);
+		// armazena os dados no storage
+		chrome.storage.sync.set(storageObj);
+		// incrementa o id
 		id++;
 
 		// reseta o valor do input
 		userInput.value = '';
+		
+		// vasculha todos os <li> e adiciona o efeito de remover item
 		setRemovers();
-	} // setItem()
+	} // addItem()
 
 	function setRemovers(){
 		/*
-		**	Adiciona uma acao de remover para cada <li>
+		**	Adiciona uma functus de remover para cada <li>
 		*/
 
-		for( var i = 0; i < removeButton.length; i++ ){
+		var length = removeButton.length;
+
+		for( var i = 0; i < length; i++ ){
 			removeButton[i].onclick = function(){
+				// extrai o id do <li>, que eh o mesmo contido no storage
 				var objId 	= this.parentNode.id;
 					objId 	= parseInt(objId);
+
+				// cruza o id do <li> com o dos objetos armazenados na variavel global
 				for ( var j in storageObj ) {
 					if ( storageObj[j].id === objId ) {
+						// remove o <li> da lista
 						delete storageObj[j];
-						chrome.storage.local.clear();
-						chrome.storage.local.set(storageObj);
+						// dah um hide no <li>
+						this.parentNode.style.display = 'none';
 					}
 				}
-				this.parentNode.style.display = 'none';
+
+				// limpa o storage
+				chrome.storage.sync.clear();
+
+				// envia a nova lista de objetos para o storage
+				chrome.storage.sync.set(storageObj);
 			};
 		}
 	} // setRemovers()
 
+	// INICIO
+	var doc 			= document,
+		addButton		= doc.getElementById('add-button'),
+		userInput 		= doc.getElementById('user-input'),
+		removeButton	= doc.getElementsByClassName('remove-button'),
+		todoList 		= doc.getElementById('todo-list'),
+		storageObj 	 	= {},
+		storageBytes 	= 0,
+		id 				= 0;
+
 	addButton.onclick = function(){
-		setItem();
-	}; // onclick()
+		addItem();
+	};
 
 	userInput.onkeypress = function(e){
+		// tecla enter do teclado
 		if ( e.keyCode === 13 ) {
-			setItem();
+			addItem();
 		}
-	}; // onkeypress()
+	};
 
-	//============================================
-
-	// se o localStorage ja conter data
-	chrome.storage.local.getBytesInUse(
-		function(x){
-			storageBytes = x;
-
-			if ( storageBytes > 0 ) {
-				loadData();
-			}
-		}
-	);
+	// se jah existirem dados no storage, faz um load
+	loadData();
 } // window.onload()

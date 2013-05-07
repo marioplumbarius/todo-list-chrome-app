@@ -8,12 +8,12 @@
   ],
   "app": {
     "background": {
-      "scripts": ["main.js"]
+      "scripts": ["js/main.js"]
     }
   },
   "icons": {
-    "16": "todo-list-16.jpg",
-    "128": "todo-list-128.jpg"
+    "16": "img/todo-list-16.jpg",
+    "128": "img/todo-list-128.jpg"
   },
   "minimum_chrome_version": "23"
 }
