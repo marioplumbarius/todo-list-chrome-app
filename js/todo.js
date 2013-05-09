@@ -61,6 +61,27 @@ window.onload = function(){
 		var span 			= doc.createElement('span');
 			span.className 	= 'remove-button';
 			span.innerText 	= 'x';
+			span.onclick 	= function(){
+				// extrai o id do <li>, que eh o mesmo contido no storage
+				var objId 	= this.parentNode.id;
+					objId 	= parseInt(objId);
+
+				// cruza o id do <li> com o dos objetos armazenados na variavel global
+				for ( var j in storageObj ) {
+					if ( storageObj[j].id === objId ) {
+						// remove o <li> da lista
+						delete storageObj[j];
+						// dah um hide no <li>
+						this.parentNode.style.display = 'none';
+					}
+				}
+
+				// limpa o storage
+				chrome.storage.sync.clear();
+
+				// envia a nova lista de objetos para o storage
+				chrome.storage.sync.set(storageObj);
+			};
 		
 		// insere o span dentro do <li>
 		li.appendChild(span);
@@ -88,37 +109,37 @@ window.onload = function(){
 		setRemovers();
 	} // addItem()
 
-	function setRemovers(){
-		/*
-		**	Adiciona uma functus de remover para cada <li>
-		*/
+	// function setRemovers(){
+	// 	/*
+	// 	**	Adiciona uma functus de remover para cada <li>
+	// 	*/
 
-		var length = removeButton.length;
+	// 	var length = removeButton.length;
 
-		for( var i = 0; i < length; i++ ){
-			removeButton[i].onclick = function(){
-				// extrai o id do <li>, que eh o mesmo contido no storage
-				var objId 	= this.parentNode.id;
-					objId 	= parseInt(objId);
+	// 	for( var i = 0; i < length; i++ ){
+	// 		removeButton[i].onclick = function(){
+	// 			// extrai o id do <li>, que eh o mesmo contido no storage
+	// 			var objId 	= this.parentNode.id;
+	// 				objId 	= parseInt(objId);
 
-				// cruza o id do <li> com o dos objetos armazenados na variavel global
-				for ( var j in storageObj ) {
-					if ( storageObj[j].id === objId ) {
-						// remove o <li> da lista
-						delete storageObj[j];
-						// dah um hide no <li>
-						this.parentNode.style.display = 'none';
-					}
-				}
+	// 			// cruza o id do <li> com o dos objetos armazenados na variavel global
+	// 			for ( var j in storageObj ) {
+	// 				if ( storageObj[j].id === objId ) {
+	// 					// remove o <li> da lista
+	// 					delete storageObj[j];
+	// 					// dah um hide no <li>
+	// 					this.parentNode.style.display = 'none';
+	// 				}
+	// 			}
 
-				// limpa o storage
-				chrome.storage.sync.clear();
+	// 			// limpa o storage
+	// 			chrome.storage.sync.clear();
 
-				// envia a nova lista de objetos para o storage
-				chrome.storage.sync.set(storageObj);
-			};
-		}
-	} // setRemovers()
+	// 			// envia a nova lista de objetos para o storage
+	// 			chrome.storage.sync.set(storageObj);
+	// 		};
+	// 	}
+	// } // setRemovers()
 
 	// INICIO
 	var doc 			= document,
