@@ -31,8 +31,13 @@ body {
       }
       .items-ul {
         .item {
+        width: 190px;
         list-style-position: inside;
         font: normal 14px/16px arial;
+
+          &:hover {
+            background: #eee;
+          }
           .remove-button {
             font: bold 14px/16px arial;
             margin-left: 5px;

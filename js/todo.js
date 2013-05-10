@@ -1,43 +1,71 @@
 window.onload = function(){
-	// FUNCTUS
+	
+	function removeParent(obj){
+		for ( var i in storageObj ) {
+			if ( parseInt(i) ===  parseInt(obj.parentNode.id) ) {
+				delete storageObj[i];
+				obj.parentNode.parentNode.removeChild(obj.parentNode);
+			}
+		}
+		saveChanges(storageObj);
+	} // removeParent()
+
+	function saveChanges(obj){
+		chrome.storage.sync.clear();
+		chrome.storage.sync.set(obj);
+	} // saveChanges()
+	
 	function loadData(){
 		/* 
 		** Extrai objetos do chrome.storage , cria elementos <li> e inclui no #document
 		*/
 		chrome.storage.sync.get(
-			function(item){
-				var objArray = [],
-					obj;
-				
-				objArray.push(item);
-				id = objArray.length; // sincroniza o id global com o do storage
-				obj = objArray[0]; // extrai o objeto do array
+			function(items){
+				// cria um array para armazenar o objeto vindo do storage
+				var obj = [];
+				obj.push(items);
 
-				// caso não existam objetos no array, pula o load e reseta o valor do id
-				if ( objArray.length < 1 ) {
+				// se o array for maior que 0, existem dados para serem carregados
+				if ( obj.length === 1 ) {
+					obj = obj[0]; // extrai o obj do array
+
+					// armazena o length do objeto baseado na quantidade de keys
+					var lastIndex  = (Object.keys(obj).length) - 1,
+		  				i		= 0;
+
+		  			// esse loop serve para encontrar o valor do ultimo id
+					for(var key in obj){
+						if (i === lastIndex) {
+							id = parseInt(key);
+							id++;
+							console.log('o proximo id disponivel e = ' + id);
+						}
+						i++;
+					}
+					storageObj = obj;
+				} else {
 					id = 0;
-					return 'não existem elementos no objArray, resetando o id';
+					storageObj = {};
+					return 'nao existem elementos no storage, o id foi resetado';
 				}
 
-				// armazena os dados do storage.local
-				storageObj = obj;
-
 				// cria elementos <li> e faz o append na <ul> #todo-list
-				for(var i in obj){
-					var item 	= obj[i],
+				for(var i in storageObj){
+					var item 	= storageObj[i],
 						li 		= doc.createElement('li'),
 						span 	= doc.createElement('span');
 
 					li.className = 'item';
-					li.id 		 = i;
+					li.id 		 = item.id;
 					li.innerText = item.value;
 					span.className = 'remove-button';
-					span.innerText = 'x';						
+					span.innerText = 'x';
+					span.onclick = function(){
+						removeParent(this);
+					};
 					li.appendChild(span);
 					todoList.appendChild(li);
 				}
-				// vasculha todos os <li> e adiciona a functus de remover item
-				setRemovers();
 			} // storage callback()
 		);
 	} // loadData()
@@ -49,6 +77,9 @@ window.onload = function(){
 
 		if ( userInput.value === '' ) {
 			return false;
+		} else if ( Object.keys(storageObj).length < 1 ) {
+			// reseta o id caso tudo seja excluido
+			id = 0;
 		}
 
 		// cria o elemento <li>
@@ -62,84 +93,30 @@ window.onload = function(){
 			span.className 	= 'remove-button';
 			span.innerText 	= 'x';
 			span.onclick 	= function(){
-				// extrai o id do <li>, que eh o mesmo contido no storage
-				var objId 	= this.parentNode.id;
-					objId 	= parseInt(objId);
-
-				// cruza o id do <li> com o dos objetos armazenados na variavel global
-				for ( var j in storageObj ) {
-					if ( storageObj[j].id === objId ) {
-						// remove o <li> da lista
-						delete storageObj[j];
-						// dah um hide no <li>
-						this.parentNode.style.display = 'none';
-					}
-				}
-
-				// limpa o storage
-				chrome.storage.sync.clear();
-
-				// envia a nova lista de objetos para o storage
-				chrome.storage.sync.set(storageObj);
+				removeParent(this);
 			};
 		
-		// insere o span dentro do <li>
 		li.appendChild(span);
-
-		// adiciona o elemento <li> a lista
 		todoList.appendChild(li);
 
-		// cria um objeto e armazena os dados
+		// cria um objeto e armazena os dados do <li>
 		var	item = {
 			id 		: id,
 			value	: userInput.value
 		};
 
+		// armazena o objeto na lista de <li> do storage do js
 		storageObj[id] = item;
-
-		// armazena os dados no storage
-		chrome.storage.sync.set(storageObj);
+		
 		// incrementa o id
 		id++;
 
 		// reseta o valor do input
 		userInput.value = '';
-		
-		// vasculha todos os <li> e adiciona o efeito de remover item
-		setRemovers();
+
+		// salva os dados no storage
+		saveChanges(storageObj);
 	} // addItem()
-
-	// function setRemovers(){
-	// 	/*
-	// 	**	Adiciona uma functus de remover para cada <li>
-	// 	*/
-
-	// 	var length = removeButton.length;
-
-	// 	for( var i = 0; i < length; i++ ){
-	// 		removeButton[i].onclick = function(){
-	// 			// extrai o id do <li>, que eh o mesmo contido no storage
-	// 			var objId 	= this.parentNode.id;
-	// 				objId 	= parseInt(objId);
-
-	// 			// cruza o id do <li> com o dos objetos armazenados na variavel global
-	// 			for ( var j in storageObj ) {
-	// 				if ( storageObj[j].id === objId ) {
-	// 					// remove o <li> da lista
-	// 					delete storageObj[j];
-	// 					// dah um hide no <li>
-	// 					this.parentNode.style.display = 'none';
-	// 				}
-	// 			}
-
-	// 			// limpa o storage
-	// 			chrome.storage.sync.clear();
-
-	// 			// envia a nova lista de objetos para o storage
-	// 			chrome.storage.sync.set(storageObj);
-	// 		};
-	// 	}
-	// } // setRemovers()
 
 	// INICIO
 	var doc 			= document,
@@ -148,7 +125,6 @@ window.onload = function(){
 		removeButton	= doc.getElementsByClassName('remove-button'),
 		todoList 		= doc.getElementById('todo-list'),
 		storageObj 	 	= {},
-		storageBytes 	= 0,
 		id 				= 0;
 
 	addButton.onclick = function(){
@@ -162,6 +138,6 @@ window.onload = function(){
 		}
 	};
 
-	// se jah existirem dados no storage, faz um load
+	// se ja existirem dados no storage, faz um load
 	loadData();
 } // window.onload()
