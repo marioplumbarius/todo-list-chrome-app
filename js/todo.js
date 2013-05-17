@@ -33,19 +33,30 @@ function initTodo(){
 
 		// cria o elemento <li>
 		var li 				= doc.createElement('li');
-			li.className	= 'item';
+			li.className 	= 'item';
 			li.id 			= id;
-			li.innerText 	= value;
+			// li.innerText 	= value;
+
+		// cria o elemento que armazenara o conteudo
+		var content 			= doc.createElement('span');
+			content.className 	= 'content';
+			content.innerText 	= value;
+			content.setAttribute('contenteditable', 'true');
+			content.onclick = function(){
+				this.focus();
+			};
 		
 		// cria o elemento que servira para remover o <li> da lista
-		var span 			= doc.createElement('span');
-			span.className 	= 'remove-button';
-			span.innerText 	= 'x';
-			span.onclick 	= function(){
+		var button 				= doc.createElement('input');
+			button.type 		= 'button';
+			button.className 	= 'remove-button';
+			button.value 		= 'x';
+			button.onclick 		= function(){
 				removeParent(this);
 			};
 		// joga o <span> dentro do <li>
-		li.appendChild(span);
+		li.appendChild(content);
+		li.appendChild(button);
 		return li;
 	} // createHTMLItem()
 
@@ -175,4 +186,6 @@ function initTodo(){
 
 	// carrega dados do storage OU reseta as variaveis do js
 	loadData();
+
+	$('#todo-list').sortable();
 } // initTodo()
