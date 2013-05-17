@@ -12,7 +12,7 @@ body {
 /* line 10, ../sass/main.scss */
 body .container {
   padding: 10px;
-  width: 800px;
+  width: 530px;
 }
 /* line 16, ../sass/main.scss */
 body .container .input .heading {
@@ -24,28 +24,42 @@ body .container .input .description {
   margin-bottom: 5px;
   font: normal 14px/16px arial;
 }
-/* line 27, ../sass/main.scss */
+/* line 26, ../sass/main.scss */
+body .container .input #add-button {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+/* line 33, ../sass/main.scss */
 body .container .output {
   margin-top: 20px;
 }
-/* line 29, ../sass/main.scss */
+/* line 35, ../sass/main.scss */
 body .container .output .heading {
   font: normal 22px/24px arial;
 }
-/* line 33, ../sass/main.scss */
+/* line 38, ../sass/main.scss */
+body .container .output .items-ul {
+  list-style: none;
+}
+/* line 40, ../sass/main.scss */
 body .container .output .items-ul .item {
-  width: 190px;
-  list-style-position: inside;
   font: normal 14px/16px arial;
 }
-/* line 38, ../sass/main.scss */
-body .container .output .items-ul .item:hover {
+/* line 44, ../sass/main.scss */
+body .container .output .items-ul .item .content {
+  display: block;
+  float: left;
+  width: 500px;
+  -webkit-user-select: text;
+}
+/* line 50, ../sass/main.scss */
+body .container .output .items-ul .item .content:hover, body .container .output .items-ul .item .content:focus {
   background: #eee;
 }
-/* line 41, ../sass/main.scss */
+/* line 56, ../sass/main.scss */
 body .container .output .items-ul .item .remove-button {
-  font: bold 14px/16px arial;
-  margin-left: 5px;
+  width: 20px;
+  height: 20px;
   cursor: pointer;
-  color: red;
 }

@@ -9,7 +9,7 @@ body {
 
   .container {
     padding: 10px;
-    width: 800px;
+    width: 530px;
     
     .input{
 
@@ -22,6 +22,12 @@ body {
         margin-bottom: 5px;
         font: normal 14px/16px arial;
       }
+
+      #add-button {
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+      }
     } // input
 
     .output {
@@ -30,19 +36,27 @@ body {
         font: normal 22px/24px arial;
       }
       .items-ul {
+        list-style: none;
         .item {
-        width: 190px;
-        list-style-position: inside;
+        // width: 190px;
         font: normal 14px/16px arial;
 
-          &:hover {
-            background: #eee;
+          .content {
+            display: block;
+            float: left;
+            width: 500px;
+            -webkit-user-select: text;
+            
+            &:hover, &:focus {
+              background: #eee;
+            }
+
           }
+
           .remove-button {
-            font: bold 14px/16px arial;
-            margin-left: 5px;
+            width: 20px;
+            height: 20px;
             cursor: pointer;
-            color: red;
           }
         } // item
       } // item-ul
