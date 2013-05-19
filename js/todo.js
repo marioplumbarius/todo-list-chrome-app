@@ -37,24 +37,37 @@ function initTodo(){
 			li.id 			= id;
 			// li.innerText 	= value;
 
+		// cria o elemento de checkbox / tarefa concluida
+		var checkbox 		= doc.createElement('input');
+			checkbox.type 	= 'checkbox';
+			checkbox.onclick = function() {
+				var content = checkbox.parentNode.getElementsByClassName('content')[0];
+				if ( checkbox.checked ) {
+					content.classList.add('done');
+				} else {
+					content.classList.remove('done');
+				}
+			};
+
+
 		// cria o elemento que armazenara o conteudo
 		var content 			= doc.createElement('span');
 			content.className 	= 'content';
 			content.innerText 	= value;
-			content.setAttribute('contenteditable', 'true');
-			content.onclick = function(){
-				this.focus();
-			};
+			content.addEventListener('click', function(){
+				content.setAttribute('contenteditable', 'true');
+			}, false);
 		
 		// cria o elemento que servira para remover o <li> da lista
-		var button 				= doc.createElement('input');
-			button.type 		= 'button';
+		var button 				= doc.createElement('button');
+			// button.type 		= 'button';
 			button.className 	= 'remove-button';
-			button.value 		= 'x';
+			button.innerText	= 'x';
 			button.onclick 		= function(){
 				removeParent(this);
 			};
-		// joga o <span> dentro do <li>
+		// joga os elementos dentro do <li>
+		li.appendChild(checkbox);
 		li.appendChild(content);
 		li.appendChild(button);
 		return li;
@@ -187,5 +200,5 @@ function initTodo(){
 	// carrega dados do storage OU reseta as variaveis do js
 	loadData();
 
-	$('#todo-list').sortable();
+	// $('#todo-list').sortable();
 } // initTodo()
