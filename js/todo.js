@@ -35,7 +35,6 @@ function initTodo(){
 		var li 				= doc.createElement('li');
 			li.className 	= 'item';
 			li.id 			= id;
-			// li.innerText 	= value;
 
 		// cria o elemento de checkbox / tarefa concluida
 		var checkbox 		= doc.createElement('input');
@@ -56,6 +55,7 @@ function initTodo(){
 			content.innerText 	= value;
 			content.addEventListener('click', function(){
 				content.setAttribute('contenteditable', 'true');
+				content.focus();
 			}, false);
 		
 		// cria o elemento que servira para remover o <li> da lista

@@ -77,6 +77,10 @@ body {
             font: normal 14px/19px arial;
             -webkit-user-select: text;
 
+            &:hover {
+              cursor: text;
+            }
+
             &.done {
               color: #999;
               text-decoration: line-through;
