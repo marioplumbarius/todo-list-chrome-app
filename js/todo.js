@@ -53,9 +53,24 @@ function initTodo(){
 		var content 			= doc.createElement('span');
 			content.className 	= 'content';
 			content.innerText 	= value;
+
+			// torna o conteudo editavel ao clicar
 			content.addEventListener('click', function(){
 				content.setAttribute('contenteditable', 'true');
 				content.focus();
+			}, false);
+
+			// atualiza o storage caso o usuario digite um valor diferente do que estava
+			content.addEventListener('blur', function(){
+				var newContent = content.innerText;
+				
+				for( var i in storageObj ){
+					if ( storageObj[i].id === parseInt(content.parentNode.id) && storageObj[i].value !== newContent ) {
+						storageObj[i].value = newContent;
+						saveChanges(storageObj);
+					}
+				}
+
 			}, false);
 		
 		// cria o elemento que servira para remover o <li> da lista
@@ -200,5 +215,5 @@ function initTodo(){
 	// carrega dados do storage OU reseta as variaveis do js
 	loadData();
 
-	// $('#todo-list').sortable();
+	$('#todo-list').sortable();
 } // initTodo()
