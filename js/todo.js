@@ -60,12 +60,12 @@ function initTodo(){
 		
 		// cria o elemento que servira para remover o <li> da lista
 		var button 				= doc.createElement('button');
-			// button.type 		= 'button';
 			button.className 	= 'remove-button';
 			button.innerText	= 'x';
 			button.onclick 		= function(){
 				removeParent(this);
 			};
+
 		// joga os elementos dentro do <li>
 		li.appendChild(checkbox);
 		li.appendChild(content);

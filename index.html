@@ -3,6 +3,7 @@
   <head>
   	<link rel="stylesheet" href="css/main.css">
     <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/jquery-color.js"></script>
     <script type="text/javascript" src="js/jquery-ui.js"></script>
   	<script type="text/javascript" src="js/todo.js"></script>
     <title>Todo list - created by Mario Luan</title>
@@ -11,12 +12,12 @@
   	<div class="container">
   		<section class="input">
 		  	<h1 class="heading">Todo list</h1>
-		  	<p class="description">Type anything and hit add</p>
-		  	<input name="user-input" id="user-input" type="text" placeholder="type here..." />
+		  	<p class="description">Type down your tasks and hit +</p>
+		  	<input name="user-input" id="user-input" type="text" autofocus="autofocus" placeholder="type here..." />
 		  	<input id="add-button" type="button" value="+" />
   		</section><!-- input -->
   		<section class="output">
-	  		<h2 class="heading">Added items</h2>
+	  		<h2 class="heading">pending</h2>
 	  		<ul id="todo-list" class="items-ul">
 	  		</ul>
 	  	</section><!-- output -->

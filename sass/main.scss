@@ -36,11 +36,11 @@ body {
         margin-left: 10px;
         font: bold 42px/0px arial;
         cursor: pointer;
-        background: #00CC0B;
+        background: #999;
         color: white;
 
         &:active {
-          background: #3D8E3D;
+          background: #666;
         }
       }
     } // input
@@ -54,26 +54,28 @@ body {
       .items-ul {
         list-style: none;
         .item {
-          height: 30px;
-          margin-bottom: 5px;
+          height: 19px;
+          margin: 0 0 0 0;
+          padding: 5px 0 5px 10px;
+          border-bottom: 1px dotted #eee;
+
+          &:hover {
+              background: #eee;
+          }
 
           input[type=checkbox] {
             float: left;
-            width: 30px; // altura + largura
-            height: 30px; // posisionamento y
+            width: 15px; // altura + largura
+            height: 19px; // posisionamento y
           }
 
           .content {
             display: block;
             float: left;
-            width: 481px;
+            width: 482px;
             margin: 0 5px;
-            font: normal 16px/30px arial;
+            font: normal 14px/19px arial;
             -webkit-user-select: text;
-            
-            &:hover {
-              background: #eee;
-            }
 
             &.done {
               color: #999;
@@ -82,17 +84,17 @@ body {
           }
 
           .remove-button {
-            width: 29px;
-            height: 29px;
-            font: bold 12px/0px arial;
+            width: 30px;
+            float: right;
+            font: bold 15px/19px arial;
             cursor: pointer;
-            background: #CC0000;
-            color: #fff;
-            border-width: 1px;
+            background: transparent;
+            color: #999;
+            border: none;
 
 
-            &:active {
-              background: #660005;
+            &:hover {
+              color: red;
             }
           }
         } // item
