@@ -69,6 +69,13 @@ body {
             height: 19px; // posisionamento y
           }
 
+          &[data-status='done'] {
+            .content {
+              color: #999;
+              text-decoration: line-through;
+            }
+          }
+
           .content {
             display: block;
             float: left;
@@ -79,11 +86,6 @@ body {
 
             &:focus {
               cursor: text;
-            }
-
-            &.done {
-              color: #999;
-              text-decoration: line-through;
             }
           }
 
