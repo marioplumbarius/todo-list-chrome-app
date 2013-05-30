@@ -45,6 +45,11 @@ function initTodo(){
 		// cria o elemento de checkbox / tarefa concluida
 		var checkbox 		= doc.createElement('input');
 			checkbox.type 	= 'checkbox';
+
+			// faz o checkbox ficar ticado caso a tarefa tenha a class done
+			if ( itemStatus === 'done' ) {
+				checkbox.checked = true;
+			}
 			
 			checkbox.onclick = function() {
 				var li 		= checkbox.parentNode,
