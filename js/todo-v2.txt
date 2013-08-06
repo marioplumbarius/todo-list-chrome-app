@@ -10,9 +10,9 @@
 	- deve ter um metodo para adicionar dados no storage.local e storage.sync
 
 ##	Listas
-	- deve ter um container <ul> ou <ol>
-	- deve ter funcoes de adicionar e remover <li>s
-	- deve computar a quantidade de <li>s na Lista
+- deve ter um container <ul> ou <ol>
+- deve ter funcoes de adicionar e remover <li>s
+- deve computar a quantidade de <li>s na Lista
 
 ##	Item
 	- deve ser uma <li>
