@@ -4,7 +4,7 @@ Chrome App organizador de tarefas (aka todo list) iniciado enquanto participava 
 #Como?
 Utilizei JS em conjunto com a API storage do chrome.
 
-#TODO
+##TODO
 - orientar a objetos
 - fazer fallback para a API localStorage quando não existir conexão com internet
 - criar temas para o app (mesma estrutura HTML / só muda CSS)
