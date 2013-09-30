@@ -1,6 +1,11 @@
 "use strict";
 
 function List( container ){
+	/*
+	** <ul> constructor
+	** @param {Object} : ref. objeto jquery
+	*/
+
 	this.container 	= container || null;
 	this.items 		= {
 		ids : [],
@@ -17,6 +22,11 @@ function List( container ){
 }
 
 List.prototype.renderDOM = function( returnDOM ){
+	/*
+	** Renders element DOM
+	** @param {Boolean} : return it or just rende
+	** @return {Object} : jquery object
+	*/
 	var returnDOM = returnDOM || null;
 	var ul = '<ul class="'+this.listName+'"></ul>';
 	this.DOM = $( ul );
