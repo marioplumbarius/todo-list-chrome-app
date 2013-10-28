@@ -17,8 +17,10 @@ function List( container ){
 }
 
 List.prototype.renderDOM = function( returnDOM ){
-	var returnDOM = returnDOM || null;
-	var ul = '<ul class="'+this.listName+'"></ul>';
+	var self 		= this;
+	var returnDOM 	= returnDOM || null;
+	
+	self.DOM = $( '<ul>' + self.listName + '</ul>' );
 	this.DOM = $( ul );
 
 	if ( returnDOM ) {
